@@ -1,7 +1,7 @@
 # Specific settings for client on Redhat distribution.
 class nfs::client::redhat inherits nfs::base {
 
-  case  $::operatingsystemmajrelease {
+  case  $facts['os']['distro']['release']['major'] {
     '5' : {
       $nfslock_requirement = [Package['nfs-client'], Package['nfs-utils']]
       $nfsclient_package   = 'portmap'
@@ -47,7 +47,7 @@ class nfs::client::redhat inherits nfs::base {
     hasstatus => true,
     require   => $nfslock_requirement,
   }
-  if  versioncmp($::operatingsystemmajrelease, '7')  < 0 {
+  if  versioncmp($facts['os']['distro']['release']['major'], '7')  < 0 {
     service { 'netfs':
       enable  => true,
       require => $netfs_requirement,

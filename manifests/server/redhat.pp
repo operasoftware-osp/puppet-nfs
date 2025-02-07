@@ -6,7 +6,7 @@
 #
 class nfs::server::redhat inherits nfs::client::redhat {
 
-  if Integer($::operatingsystemmajrelease) >= 7 {
+  if Integer($facts['os']['distro']['release']['major']) >= 7 {
     $servicename = 'nfs-server'
   } else {
     $servicename = 'nfs'

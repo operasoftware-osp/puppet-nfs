@@ -2,9 +2,9 @@
 class nfs::params {
 
   # These params only used by the nfs::client::debian class
-  case $::operatingsystem {
+  case $facts['os']['name'] {
     'Debian': {
-      case $::lsbdistcodename {
+      case $facts['os']['distro']['codename'] {
         'squeeze': {
           $portmap_service = 'portmap'
           $portmap_package = 'portmap'
@@ -26,7 +26,7 @@ class nfs::params {
     'Ubuntu': {
       $portmap_service = 'rpcbind'
       $portmap_package = 'rpcbind'
-      if versioncmp($::operatingsystemrelease, '16.04') >= 0 {
+      if versioncmp($facts['os']['distro']['release'], '16.04') >= 0 {
         $portmap_enable = undef
         $statd_service = 'rpc-statd'
       } else {
@@ -35,7 +35,7 @@ class nfs::params {
       }
     }
     default: {
-      fail("Operating system not supported ${::operatingsystem}")
+      fail("Operating system not supported ${facts['os']['name']}")
     }
   }
 }

@@ -7,9 +7,9 @@ class nfs::server(
   $service_enable  = true,
   $service_running = true,
 ) {
-  case $::osfamily {
+  case $facts['os']['family'] {
     'Debian': { include ::nfs::server::debian}
     'RedHat': { include ::nfs::server::redhat }
-    default: { notice "Unsupported operatingsystem ${::operatingsystem}" }
+    default: { notice "Unsupported operatingsystem ${facts['os']['name']}" }
   }
 }
